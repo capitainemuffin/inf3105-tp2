@@ -5,6 +5,11 @@ programme = tp2
 
 default : $(programme)
 
+debug : main.o arbremap.o	
+	g++ -D debug -o $(programme) main.o arbremap.o $(options)
+	./$(programme)
+	@make clean
+
 $(programme) : main.o arbremap.o
 	g++ -o $(programme) main.o arbremap.o $(options)
 
@@ -15,6 +20,6 @@ arbremap.o : arbremap.cpp pile.h
 	g++ -c -o arbremap.o arbremap.cpp $(options)
 
 clean : 
-	rm -f $(programme)
-	rm -f *.o
-	rm -fr tests
+	@rm -f $(programme)
+	@rm -f *.o
+	@rm -fr tests

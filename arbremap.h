@@ -11,6 +11,7 @@
 #include <cassert>
 #include <utility>
 #include <vector>
+
 class ArbreMap {
 
 public:
@@ -30,11 +31,6 @@ public:
     double aGauche(double);
     void appartient(double) const;
 
-    //surcharge d'opérateurs
-
-    const double operator[] (const double) const;
-    double operator[] (const double);
-
     //méthodes avec Iterateur
 
     class Iterateur;
@@ -43,6 +39,11 @@ public:
     Iterateur recherche(double) const;
     Iterateur egalOuSuivant(double) const;
     Iterateur egalOuPrecedent(double) const;
+
+    //surcharge d'opérateurs
+    std::tuple<double,double,double> operator[](const Iterateur&) const;
+    std::tuple<double,double,double> operator[](double cle) const;
+    friend std::istream& operator>>(std::istream&, ArbreMap&);
 
     class Noeud {
 
@@ -65,6 +66,7 @@ public:
     void rotationDroiteGauche(Noeud*&);
     void copier(const Noeud*, Noeud*&) const;
     void vider(Noeud*&);
+    void miseAjourMaxima(Noeud*&);
 
     class Iterateur {
 
@@ -78,6 +80,7 @@ public:
         bool operator !() const;
         bool operator == (const Iterateur&) const;
         bool operator != (const Iterateur&) const;
+        Iterateur& operator ++ ();
 
     private:
 

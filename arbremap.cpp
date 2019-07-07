@@ -19,10 +19,49 @@ ArbreMap::ArbreMap(const ArbreMap& autre){
 	copier(autre.racine, this->racine);
 }
 
+void ArbreMap::miseAjourMaxima(Noeud*& racine){
+
+	if(racine->gauche) miseAjourMaxima(racine->gauche);
+	if(racine->droite) miseAjourMaxima(racine->droite);
+
+	if(racine->gauche && racine->gauche->valeur > racine->valeur) {
+
+		racine->a = racine->gauche->a;
+
+	}
+
+	if(racine->droite && racine->droite->valeur > racine->valeur){
+
+		racine->a = racine->droite->a;
+	}
+
+}
+
+double aGauche(double cle){
+
+	return cle;
+}
+
+double ArbreMap::maxima() const{
+
+	assert(this->racine);
+	return this->racine->a;
+
+}
+
+double ArbreMap::maxima (double cle) const {
+
+	assert(this->racine);
+
+	return cle;
+
+}
+
 
 void ArbreMap::inserer (double cle, double valeur){
 	
 	inserer(cle, valeur, this->racine);
+	miseAjourMaxima(this->racine);
 
 }
 
@@ -141,10 +180,118 @@ void ArbreMap::vider(Noeud*& noeud){
 
 		if(noeud->gauche != NULL) vider (noeud->gauche);
 		if(noeud->droite != NULL) vider (noeud->droite);
-
 		noeud = NULL;
 		delete noeud;
 	}
 
+
+}
+
+/*
+* Méthodes en lien avec l'itérateur
+*/
+ArbreMap::Iterateur ArbreMap::debut() const{
+
+	Iterateur iter(*this);
+
+	Noeud* tmp = this->racine;
+
+	if(tmp){
+
+		while(tmp->gauche){
+
+		iter.chemin.empiler(tmp);
+		tmp = tmp->gauche;
+
+		} 
+
+	}
+
+
+	iter.courant = tmp;
+
+	return iter;
+}
+
+ArbreMap::Iterateur ArbreMap::rechercher(double e) const
+{
+    Iterateur iter(*this);
+    
+    Noeud* tmp = this->racine;
+
+    while(tmp){
+
+        if(e < tmp->contenu){
+
+            iter.chemin.empiler(tmp);
+            tmp = tmp->gauche;
+
+        } else if(e > tmp->contenu){
+
+            tmp = tmp->droite;
+
+        } else {
+
+            iter.courant = tmp;
+            break;
+        }
+    }
+
+    if (iter.courant == NULL) iter.chemin.vider(); 
+
+    return iter;
+}
+
+ArbreMap::Iterateur& ArbreMap::operator[](const Iterateur& iter) const {
+
+	assert(this->racine && iter.courant);
+
+	return 
+
+
+}
+
+
+/*
+* Constructeur et méthodes pour l'Itérateur 
+*/
+
+ArbreMap::Iterateur::Iterateur(const ArbreMap& arbre):
+arbre_associe(arbre),
+courant(NULL){}
+
+/**
+* Pré-increment
+*/
+ArbreMap::Iterateur& ArbreMap::Iterateur::operator++(){
+
+	assert(courant);
+
+    if(!this->chemin.vide()){
+
+        this->courant = this->chemin.depiler();
+
+        Noeud* tmp = this->courant->droite;
+        if(tmp != NULL){
+
+            this->chemin.empiler(tmp);
+            tmp = tmp->gauche;
+
+            while (tmp != NULL){
+
+                this->chemin.empiler(tmp);
+                tmp = tmp->gauche;
+
+            }
+
+        }        
+
+    } else {
+
+        this->courant = NULL;
+
+    }
+
+    return *this;
 
 }
