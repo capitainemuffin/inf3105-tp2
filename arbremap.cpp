@@ -53,7 +53,29 @@ double ArbreMap::maxima (double cle) const {
 
 	assert(this->racine);
 
-	return cle;
+	Iterateur iter = this->recherche(cle);
+
+	assert(iter.courant);
+
+	return std::get<2>(*this[iter]);
+
+}
+
+std::string ArbreMap::appartient(double cle) const {
+
+	std::string reponse;
+
+	Iterateur iter = this->recherche(cle);
+
+	if(iter.courant) {
+
+		reponse = "vrai";
+
+	} else {
+		reponse = "faux";
+	}
+
+	return reponse;
 
 }
 
@@ -213,7 +235,7 @@ ArbreMap::Iterateur ArbreMap::debut() const{
 	return iter;
 }
 
-ArbreMap::Iterateur ArbreMap::rechercher(double e) const
+ArbreMap::Iterateur ArbreMap::recherche(double e) const
 {
     Iterateur iter(*this);
     
@@ -221,12 +243,12 @@ ArbreMap::Iterateur ArbreMap::rechercher(double e) const
 
     while(tmp){
 
-        if(e < tmp->contenu){
+        if(e < tmp->cle){
 
             iter.chemin.empiler(tmp);
             tmp = tmp->gauche;
 
-        } else if(e > tmp->contenu){
+        } else if(e > tmp->cle){
 
             tmp = tmp->droite;
 
@@ -242,13 +264,10 @@ ArbreMap::Iterateur ArbreMap::rechercher(double e) const
     return iter;
 }
 
-ArbreMap::Iterateur& ArbreMap::operator[](const Iterateur& iter) const {
+std::tuple<double, double, double> ArbreMap::operator[] (const ArbreMap::Iterateur& iter) const{
 
 	assert(this->racine && iter.courant);
-
-	return 
-
-
+	return std::make_tuple(iter.courant->cle, iter.courant->valeur, iter.courant->a);
 }
 
 

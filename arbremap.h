@@ -11,6 +11,8 @@
 #include <cassert>
 #include <utility>
 #include <vector>
+#include <string>
+#include <tuple>
 
 class ArbreMap {
 
@@ -29,21 +31,18 @@ public:
     double maxima(double) const;
     std::vector<std::pair<double, double> > jusqua(double) const;
     double aGauche(double);
-    void appartient(double) const;
+    std::string appartient(double) const;
 
     //méthodes avec Iterateur
 
     class Iterateur;
     Iterateur debut() const;
-    Iterateur fin() const;
     Iterateur recherche(double) const;
-    Iterateur egalOuSuivant(double) const;
     Iterateur egalOuPrecedent(double) const;
 
     //surcharge d'opérateurs
-    std::tuple<double,double,double> operator[](const Iterateur&) const;
-    std::tuple<double,double,double> operator[](double cle) const;
     friend std::istream& operator>>(std::istream&, ArbreMap&);
+    std::tuple<double, double, double> operator[] (const Iterateur& ) const;
 
     class Noeud {
 

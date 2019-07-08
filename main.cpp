@@ -3,7 +3,7 @@
 #include <iomanip>
 #include <utility>
 
-std::ostream& operator << (std::ostream& os, ArbreMap& arbre){
+std::ostream& operator << (std::ostream& os, ArbreMap& arbre){
 	return os;
 }
 
@@ -18,7 +18,6 @@ std::istream& operator >> (std::istream& is, ArbreMap& arbre){
 				&& parentheseD == ')'
 				&& point == '.'){
 
-				std::cout << "cle et valeur : " << cle << valeur << std::endl;
 				arbre.inserer(cle, valeur);
 	
 			} else {
@@ -36,115 +35,121 @@ int main (){
 
 	ArbreMap arbre = ArbreMap();
 
-	char test;
-	std::cin >> test;
+	while(std::cin){
 
-	switch (test){
+		char test;
+		std::cin >> test >> std::ws;
 
-		case '(' : {
+		switch (test){
 
-			std::cin >> arbre;
-			break;
-		}
+			case '(' : {
 
-		case 'm' : {
+				std::cin >> arbre >> std::ws;
+				break;
+			}
 
-			char a, x, question;
-			std::cin >> a >> x >> question;
+			case 'm' : {
 
-			if(!std::cin.fail()
-				&& a == 'a'
-				&& x == 'x'
-				&& question == '?') {
+				char a, x, question;
+				std::cin >> a >> x >> question;
 
-				std::cout << arbre.maxima() << std::endl;
+				if(!std::cin.fail()
+					&& a == 'a'
+					&& x == 'x'
+					&& question == '?') {
 
-			} else {
+					std::cout << arbre.maxima() << std::endl;
 
-				std::cerr << "Commande non reconnue." << std::endl;
-				exit(-1);
+				} else {
+
+					std::cerr << "Commande non reconnue." << std::endl;
+					exit(-1);
+
+				}
+
+				break;
+			}
+
+			case 'd' : {
+
+				char o, n, n2, e, question;
+				double valeur;
+
+				std::cin >> o >> n >> n2 >> e >> valeur >> question;
+
+				if(!std::cin.fail()
+					&& o == 'o' 
+					&& n == 'n' 
+					&& n2 == 'n' 
+					&& e == 'e' 
+					&& question == '?') {
+
+					std::cout << arbre.maxima(valeur) << std::endl; 
+
+				} else {
+
+					std::cerr << "Commande non reconnue." << std::endl;
+					exit(-1);
+
+				}
+
+				break;
 
 			}
 
-			break;
-		}
+			case 'a' : {
 
-		case 'd' : {
+				char v, a, n, t, question;
+				double valeur;
 
-			char o, n, n2, e, question;
-			double valeur;
+				std::cin >> v >> a >> n >> t >> valeur >> question;
 
-			std::cin >> o, n, n, e, valeur, question;
+				if(!std::cin.fail()
+					&& v == 'v'
+					&& a == 'a'
+					&& n == 'n'
+					&& t == 't'
+					&& question == '?') {
 
-			if(!std::cin.fail()
-				&& o == 'o' 
-				&& n == 'n' 
-				&& n2 == 'n' 
-				&& e == 'e' 
-				&& question == '?') {
+				} else {
 
-				std::cout << arbre.maxima(valeur) << std::endl; 
+					std::cerr << "Commande non reconnue." << std::endl;
+					exit(-1);
 
-			} else {
+				}
 
-				std::cerr << "Commande non reconnue." << std::endl;
-				exit(-1);
-
-			}
-
-			break;
-
-		}
-
-		case 'a' : {
-
-			char v, a, n, t, question;
-			double valeur;
-
-			std::cin >> v >> a >> n >> t >> valeur >> question;
-
-			if(!std::cin.fail()
-				&& v == 'v'
-				&& a == 'a'
-				&& n == 'n'
-				&& t == 't'
-				&& question == '?') {
-
-			} else {
-
-				std::cerr << "Commande non reconnue." << std::endl;
-				exit(-1);
+				break;
 
 			}
 
-			break;
+			case 'q' : {
 
-		}
+				char point;
+				std::cin >> point;
 
-		default : {
+				if(!std::cin.fail() && point == '.') {
 
-			std::cerr << "Commande non reconnue." << std::endl;
-			exit(-1);
-		}
+					exit(0);
+
+				} else {
+
+					std::cerr << "Commande non reconnue." << std::endl;
+					exit(-1);
+
+				}
+			}
+
+			default : {
+
+				std::cerr << "Commande non reconnue." << std::endl;
+				exit(-1);
+			}
 
 
-	} 
-	
+		} 
 
-	for(int i = 30; i > 0; i--) {
 
-		arbre.inserer(i, i/2.0);
 	}
-
-	ArbreMap::Iterateur iter = arbre.debut();
-
-	for(int i = 0; i < 30; i++) {
-
-		std::cout << "(" << std::get<0>(arbre[iter]) << ",";
-		std::cout << std::get<1>(arbre[iter]) << ")" << std::endl;
-		++iter;
-
-	}
-
+		
 	return 0;
 }
