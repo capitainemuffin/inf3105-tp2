@@ -61,43 +61,53 @@ int main() {
 
     std::string commande;
 
-	while(std::getline(std::cin,commande){
+	while(std::getline(std::cin,commande)){
+
+		commande.erase(
+			std::remove_if(commande.begin(), commande.end(), ::isspace), 
+			commande.end());
+
+		std::cout << "La commande : " << commande << std::endl;
 
 
-	}
+		if (commande.front() == '(' && commande.back() == '.'){
 
-    /**
+		} else if () {
+			
+		}
+
+		std::cout << (commande[0] == '(');
+
+	/**
      * Choix 1 : insertion "(<double>, <double>)."
      */
 
-    std::cin >> arbre >> std::ws;
+    //std::cin >> arbre >> std::ws;
 
     /**
      * Choix 2 : maxima "max?"
      */
 
-    std::cout << arbre.maxima() << std::endl;
+    //std::cout << arbre.maxima() << std::endl;
 
     /**
      * Choix 3 : appartient "<double>?"
      */
 
-    std::cout << arbre.appartient(valeur) << std::endl;
+    //std::cout << arbre.appartient(valeur) << std::endl;
 
     /**
      * Choix 4 : donne "donne<double>?"
      */
 
-    std::cout << arbre.maxima(valeur) << std::endl;
+    //std::cout << arbre.maxima(valeur) << std::endl;
 
 
     /**
      * Choix 5 : avant "<double>?"
      */
 
-
-
-
+	}
 
     return 0;
 }
