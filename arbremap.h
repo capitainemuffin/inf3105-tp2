@@ -61,8 +61,6 @@ public:
 
     };
 
-private:
-
     Noeud* racine;
 
     //méthodes avec Noeud

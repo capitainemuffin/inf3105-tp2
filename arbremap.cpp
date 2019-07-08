@@ -69,8 +69,18 @@ void ArbreMap::miseAjourMaxima(Noeud *&racine) {
  *
  * @return maxima le maxima des valeurs plus petites ou égales à <cle>
  */
-double aGauche(double cle) {
-    double maxima;
+double ArbreMap::aGauche(double cle) {
+
+    double maxima = std::numeric_limits<double>::lowest();
+
+    std::vector<std::pair<double, double>> v = this->jusqua(cle);
+
+    for (auto& noeud : v){
+
+    	if (noeud.second > maxima) maxima = noeud.second;
+    	
+    }
+
     return maxima;
 }
 
@@ -203,12 +213,10 @@ std::string ArbreMap::appartient(double cle) const {
 double ArbreMap::maxima(double cle) const {
 
     assert(this->racine);
-
     Iterateur iter = this->recherche(cle);
-
     assert(iter.courant);
 
-    return std::get<2>(*this[iter]);
+    return std::get<2>((*this)[iter]);
 
 }
 
@@ -217,7 +225,19 @@ double ArbreMap::maxima(double cle) const {
  *
  * @return
  */
-std::vector <std::pair<double, double>> jusqua(double) const {
+std::vector <std::pair<double, double>> ArbreMap::jusqua(double cle) const {
+
+	ArbreMap::Iterateur iter = debut();
+	std::vector<std::pair<double,double>> v;
+
+	while(std::get<0>((*this)[iter]) <= cle){
+
+		v.push_back(std::make_pair(std::get<0>((*this)[iter]), std::get<1>((*this)[iter])));
+		++iter;
+
+	}
+
+	return v;
 
 }
 
@@ -253,6 +273,7 @@ void ArbreMap::rotationDroiteGauche(Noeud *&racine) {
     racine->droite = tmp->gauche;
     tmp->gauche = racine;
     racine = tmp;
+
 }
 
 void ArbreMap::copier(const Noeud *source, Noeud *&noeud) const {

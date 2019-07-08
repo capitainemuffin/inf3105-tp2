@@ -1,7 +1,7 @@
 options = -pedantic -Wall -std=c++11
 programme = tp2
 
-.PHONY : clean
+.PHONY : clean push
 
 default : $(programme)
 
@@ -23,3 +23,8 @@ clean :
 	@rm -f $(programme)
 	@rm -f *.o
 	@rm -fr tests
+
+push : 
+	git add . 
+	git commit -m 'automated commit'
+	git push origin master
