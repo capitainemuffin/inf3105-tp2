@@ -6,7 +6,7 @@
  */
 
 #include "arbremap.h"
-
+#include <iostream>
 /**
  * Constructeur d'un ArbreMap vide
  */
@@ -44,13 +44,13 @@ void ArbreMap::miseAjourMaxima(Noeud *&racine) {
     if (racine->gauche) miseAjourMaxima(racine->gauche);
     if (racine->droite) miseAjourMaxima(racine->droite);
 
-    if (racine->gauche && racine->gauche->valeur > racine->valeur) {
+    if (racine->gauche && racine->gauche->a > racine->valeur) {
 
         racine->a = racine->gauche->a;
 
     }
 
-    if (racine->droite && racine->droite->valeur > racine->valeur) {
+    if (racine->droite && racine->droite->a > racine->valeur) {
 
         racine->a = racine->droite->a;
     }
@@ -69,7 +69,7 @@ void ArbreMap::miseAjourMaxima(Noeud *&racine) {
  *
  * @return maxima le maxima des valeurs plus petites ou égales à <cle>
  */
-double ArbreMap::aGauche(double cle) {
+double ArbreMap::aGauche(double cle) const{
 
     double maxima = std::numeric_limits<double>::lowest();
 
@@ -186,9 +186,7 @@ std::string ArbreMap::appartient(double cle) const {
 
     std::string reponse;
 
-    Iterateur iter = this->recherche(cle);
-
-    if (iter.courant) {
+    if (cle <= aGauche(cle)) {
 
         reponse = "vrai";
 
@@ -230,9 +228,10 @@ std::vector <std::pair<double, double>> ArbreMap::jusqua(double cle) const {
 	ArbreMap::Iterateur iter = debut();
 	std::vector<std::pair<double,double>> v;
 
-	while(std::get<0>((*this)[iter]) <= cle){
+	while(iter.courant && std::get<0>((*this)[iter]) <= cle){
 
 		v.push_back(std::make_pair(std::get<0>((*this)[iter]), std::get<1>((*this)[iter])));
+
 		++iter;
 
 	}

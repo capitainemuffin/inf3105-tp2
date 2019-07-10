@@ -7,8 +7,7 @@ default : $(programme)
 
 debug : main.o arbremap.o	
 	g++ -D debug -o $(programme) main.o arbremap.o $(options)
-	./$(programme)
-	@make clean
+	./autotests.exp
 
 $(programme) : main.o arbremap.o
 	g++ -o $(programme) main.o arbremap.o $(options)
@@ -25,6 +24,7 @@ clean :
 	@rm -fr tests
 
 push : 
+	@make clean
 	git add . 
 	git commit -m 'automated commit'
 	git push origin master

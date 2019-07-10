@@ -31,7 +31,7 @@ public:
     double maxima() const;
     double maxima(double) const;
     std::vector<std::pair<double, double> > jusqua(double) const;
-    double aGauche(double);
+    double aGauche(double) const;
     std::string appartient(double) const;
 
     //méthodes avec Iterateur
