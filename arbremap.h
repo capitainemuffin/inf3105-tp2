@@ -14,7 +14,8 @@
 #include <vector>
 #include <string>
 #include <tuple>
-
+#include <iostream>
+#include <limits>
 /**
  * Représentation d'un ArbreMap
  */
@@ -85,11 +86,6 @@ public:
         Iterateur(const Iterateur&, Noeud*);
 
         // surcharge d'opérateurs
-
-        operator bool() const;
-        bool operator !() const;
-        bool operator == (const Iterateur&) const;
-        bool operator != (const Iterateur&) const;
         Iterateur& operator ++ ();
 
     private:

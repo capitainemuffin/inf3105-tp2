@@ -6,8 +6,7 @@
  */
 
 #include "arbremap.h"
-#include <iostream>
-#include <limits>
+
 /**
  * Constructeur d'un ArbreMap vide
  */
@@ -92,6 +91,12 @@ double ArbreMap::aGauche(double cle) const{
  * @param valeur
  */
 void ArbreMap::inserer(double cle, double valeur) {
+
+    if(cle > valeur ){
+        double tmp = cle;
+        cle = valeur;
+        valeur = tmp;
+    }
 
     inserer(cle, valeur, this->racine);
     miseAjourMaxima(this->racine);
@@ -224,9 +229,7 @@ std::vector <std::pair<double, double>> ArbreMap::jusqua(double cle) const {
 
 	ArbreMap::Iterateur iter = debut();
 	std::vector<std::pair<double,double>> v;
-
 	while(iter.courant && std::get<0>((*this)[iter]) <= cle){
-
 		v.push_back(std::make_pair(std::get<0>((*this)[iter]), std::get<1>((*this)[iter])));
 
 		++iter;

@@ -15,7 +15,7 @@ $(programme) : main.o arbremap.o
 main.o : main.cpp
 	g++ -c -o main.o main.cpp $(options)
 
-arbremap.o : arbremap.cpp pile.h
+arbremap.o : arbremap.cpp pile.h arbremap.h
 	g++ -c -o arbremap.o arbremap.cpp $(options)
 
 clean : 

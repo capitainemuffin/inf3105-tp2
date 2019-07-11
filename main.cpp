@@ -6,18 +6,16 @@
  */
 
 #include "arbremap.h"
-#include <iostream>
-#include <iomanip>
-#include <utility>
 #include <sstream>
 #include <cctype>
 #include <algorithm>
+
 std::ostream &operator<<(std::ostream &os, std::vector<std::pair<double, double>> v) {
 
 	os << "[";
 
 	for(auto& pair : v){
-		os << "(" << pair.first << ", " << pair.second << ")";
+		os << "(" << pair.first << ", " << pair.second << "), " ;
 	}
 
 	os << "]";
@@ -33,7 +31,6 @@ std::ostream &operator<<(std::ostream &os, std::vector<std::pair<double, double>
 int main() {
 
     ArbreMap arbre = ArbreMap();
-
     std::string commande;
 
 	while(std::getline(std::cin,commande)){
@@ -50,7 +47,6 @@ int main() {
      		*/			
 
 			double cle, valeur;
-
 			std::stringstream cle_str(commande.substr(1, commande.find(',') - 1));
 			std::stringstream valeur_str(commande.substr(commande.find(',') + 1, commande.length() - 2));
 
@@ -58,7 +54,7 @@ int main() {
 			valeur_str >> valeur;
 
 			if(cle_str.fail() || valeur_str.fail()) {
-				std::cerr << "Une erreur est survenue pour la commande 'Insertion'." << std::endl;
+				std::cerr << "Valeur invalide pour la commande 'Insertion'." << std::endl;
 				exit(-1);
 			}
 
@@ -82,7 +78,7 @@ int main() {
     		std::stringstream valeur_str(commande.substr(0, commande.length() - 1));
 
 			if(valeur_str.fail()) {
-				std::cerr << "Une erreur est survenue pour la commande 'Appartient'." << std::endl;
+				std::cerr << "Valeur invalide pour la commande 'Appartient'." << std::endl;
 				exit(-2);
 			}
 
@@ -97,36 +93,39 @@ int main() {
      		*/
 
      		double valeur;
-     		std::stringstream valeur_str(commande.substr(5, commande.length() - 1));
-
+     		std::stringstream valeur_str(commande.substr(5, commande.length() - 2));
      		valeur_str >> valeur;
 
 			if(valeur_str.fail()) {
-				std::cerr << "Une erreur est survenue pour la commande 'Donne'." << std::endl;
+				std::cerr << "Valeur invalide pour la commande 'Donne'." << std::endl;
 				exit(-3);
 			}
 
     		std::cout << arbre.maxima(valeur) << std::endl;
 
-    	} else if (commande.back() == '?') {
+    	} else if (commande.back() == '?' && commande.substr(0, 5).compare("avant") == 0) {
 
     		/**
      		* Choix 5 : avant "<double>?"
      		*/
 
     		double valeur;
-     		std::stringstream valeur_str(commande.substr(0, commande.length() - 1));
-
+     		std::stringstream valeur_str(commande.substr(5, commande.length() - 2));
      		valeur_str >> valeur;
 
      		if(valeur_str.fail()) {
-				std::cerr << "Une erreur est survenue pour la commande 'Donne'." << std::endl;
+				std::cerr << "Valeur invalide pour la commande 'Avant'." << std::endl;
 				exit(-4);
 			}
 
 			std::cout << arbre.jusqua(valeur) << std::endl;
 
 		} else if (commande.compare("q.") == 0){
+
+			/**
+			* Choix 6 : quitter 
+			*/
+
 			arbre.vider();
 			exit(0);
 
