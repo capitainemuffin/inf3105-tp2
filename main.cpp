@@ -79,7 +79,7 @@ int main() {
      		*/
 
     		double valeur;
-    		std::stringstream valeur_str(commande.substr(0, commande.find('?') - 1));
+    		std::stringstream valeur_str(commande.substr(0, commande.length() - 1));
 
 			if(valeur_str.fail()) {
 				std::cerr << "Une erreur est survenue pour la commande 'Appartient'." << std::endl;
@@ -87,8 +87,6 @@ int main() {
 			}    		
 
     		valeur_str >> valeur;
-
-    		std::cout << "valeur " << valeur;
      		std::cout << arbre.appartient(valeur) << std::endl;
 
 
@@ -99,7 +97,7 @@ int main() {
      		*/
 
      		double valeur;
-     		std::stringstream valeur_str(commande.substr(4, commande.find('?') - 1));
+     		std::stringstream valeur_str(commande.substr(5, commande.length() - 1));
 
      		valeur_str >> valeur;
 
@@ -117,7 +115,7 @@ int main() {
      		*/
 
     		double valeur;
-     		std::stringstream valeur_str(commande.substr(0, commande.find('?')- 1));
+     		std::stringstream valeur_str(commande.substr(0, commande.length() - 1));
 
      		valeur_str >> valeur;
 

@@ -210,11 +210,7 @@ std::string ArbreMap::appartient(double cle) const {
  */
 double ArbreMap::maxima(double cle) const {
 
-    assert(this->racine);
-    Iterateur iter = this->recherche(cle);
-    assert(iter.courant);
-
-    return std::get<2>((*this)[iter]);
+    return aGauche(cle);
 
 }
 
