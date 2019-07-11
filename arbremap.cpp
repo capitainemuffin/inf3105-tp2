@@ -7,11 +7,12 @@
 
 #include "arbremap.h"
 #include <iostream>
+#include <limits>
 /**
  * Constructeur d'un ArbreMap vide
  */
 ArbreMap::ArbreMap() :
-        racine(NULL) {};
+        racine(NULL) {}
 
 /**
  * Destructeur d'un ArbreMap
@@ -32,7 +33,7 @@ ArbreMap::Noeud::Noeud(double cle, double valeur) :
         a(valeur),
         equilibre(0),
         gauche(NULL),
-        droite(NULL) {};
+        droite(NULL) {}
 
 /**
  * Mets à jour le Maxima de tous les Noeuds de l'arbre.
@@ -279,6 +280,12 @@ void ArbreMap::copier(const Noeud *source, Noeud *&noeud) const {
         copier(source->gauche, noeud->gauche);
         copier(source->droite, noeud->droite);
     }
+
+}
+
+void ArbreMap::vider(){
+
+	vider(this->racine);
 
 }
 

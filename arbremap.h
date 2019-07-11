@@ -69,6 +69,7 @@ public:
     void rotationGaucheDroite(Noeud*&);
     void rotationDroiteGauche(Noeud*&);
     void copier(const Noeud*, Noeud*&) const;
+    void vider();
     void vider(Noeud*&);
     void miseAjourMaxima(Noeud*&);
 

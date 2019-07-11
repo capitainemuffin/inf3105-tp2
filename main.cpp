@@ -11,7 +11,7 @@
 #include <utility>
 #include <sstream>
 #include <cctype>
-
+#include <algorithm>
 std::ostream &operator<<(std::ostream &os, std::vector<std::pair<double, double>> v) {
 
 	os << "[";
@@ -84,7 +84,7 @@ int main() {
 			if(valeur_str.fail()) {
 				std::cerr << "Une erreur est survenue pour la commande 'Appartient'." << std::endl;
 				exit(-2);
-			}    		
+			}
 
     		valeur_str >> valeur;
      		std::cout << arbre.appartient(valeur) << std::endl;
@@ -127,7 +127,7 @@ int main() {
 			std::cout << arbre.jusqua(valeur) << std::endl;
 
 		} else if (commande.compare("q.") == 0){
-
+			arbre.vider();
 			exit(0);
 
 		} else {
