@@ -313,8 +313,12 @@ void ArbreMap::vider(Noeud *&noeud) {
  * @param arbre un arbre binaire ArbreMap
  */
 ArbreMap::Iterateur::Iterateur(const ArbreMap &arbre) :
-        arbre_associe(arbre),
-        courant(NULL) {}
+        courant(NULL) {};
+
+ArbreMap::Iterateur::~Iterateur(){
+
+	this->chemin.vider();
+}
 
 /**
  * Renvoi un itérateur pointant sur le plus petit <Noeud> de l'arbre.

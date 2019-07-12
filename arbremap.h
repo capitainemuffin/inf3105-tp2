@@ -186,6 +186,11 @@ public:
         explicit Iterateur(const ArbreMap &);
 
         /**
+        * Destructeur d'Iterateur
+        */
+        ~Iterateur();
+
+        /**
         * Surcharge de ++(). Pré-increment de <Iterateur>.
         *
         * @return l'itérateur
@@ -194,7 +199,6 @@ public:
 
     private:
 
-        const ArbreMap &arbre_associe;
         Pile<Noeud *> chemin;
         Noeud *courant;
 
