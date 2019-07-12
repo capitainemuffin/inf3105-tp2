@@ -69,16 +69,16 @@ void ArbreMap::miseAjourMaxima(Noeud *&racine) {
  *
  * @return maxima le maxima des valeurs plus petites ou égales à <cle>
  */
-double ArbreMap::aGauche(double cle) const{
+double ArbreMap::aGauche(double cle) const {
 
     double maxima = std::numeric_limits<double>::lowest();
 
-    std::vector<std::pair<double, double>> v = this->jusqua(cle);
+    std::vector <std::pair<double, double>> v = this->jusqua(cle);
 
-    for (auto& noeud : v){
+    for (auto &noeud : v) {
 
-    	if (noeud.second > maxima) maxima = noeud.second;
-    	
+        if (noeud.second > maxima) maxima = noeud.second;
+
     }
 
     return maxima;
@@ -92,7 +92,7 @@ double ArbreMap::aGauche(double cle) const{
  */
 void ArbreMap::inserer(double cle, double valeur) {
 
-    if(cle > valeur ){
+    if (cle > valeur) {
         std::cerr << "La clé ne peut être plus grande que la valeur." << std::endl;
         exit(-6);
     }
@@ -226,16 +226,16 @@ double ArbreMap::maxima(double cle) const {
  */
 std::vector <std::pair<double, double>> ArbreMap::jusqua(double cle) const {
 
-	ArbreMap::Iterateur iter = debut();
-	std::vector<std::pair<double,double>> v;
-	while(iter.courant && std::get<0>((*this)[iter]) <= cle){
-		v.push_back(std::make_pair(std::get<0>((*this)[iter]), std::get<1>((*this)[iter])));
+    ArbreMap::Iterateur iter = debut();
+    std::vector <std::pair<double, double>> v;
+    while (iter.courant && std::get<0>((*this)[iter]) <= cle) {
+        v.push_back(std::make_pair(std::get<0>((*this)[iter]), std::get<1>((*this)[iter])));
 
-		++iter;
+        ++iter;
 
-	}
+    }
 
-	return v;
+    return v;
 
 }
 
@@ -285,9 +285,9 @@ void ArbreMap::copier(const Noeud *source, Noeud *&noeud) const {
 
 }
 
-void ArbreMap::vider(){
+void ArbreMap::vider() {
 
-	vider(this->racine);
+    vider(this->racine);
 
 }
 

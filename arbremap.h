@@ -8,6 +8,7 @@
 
 #if !defined(__ARBREMAP_H__)
 #define __ARBREMAP_H__
+
 #include "pile.h"
 #include <cassert>
 #include <utility>
@@ -16,6 +17,7 @@
 #include <tuple>
 #include <iostream>
 #include <limits>
+
 /**
  * Représentation d'un ArbreMap
  */
@@ -24,27 +26,37 @@ class ArbreMap {
 public:
 
     ArbreMap();
+
     ~ArbreMap();
 
     //méthodes avec clé/valeur
 
     void inserer(double, double);
+
     double maxima() const;
+
     double maxima(double) const;
-    std::vector<std::pair<double, double> > jusqua(double) const;
+
+    std::vector <std::pair<double, double>> jusqua(double) const;
+
     double aGauche(double) const;
+
     std::string appartient(double) const;
 
     //méthodes avec Iterateur
 
     class Iterateur;
+
     Iterateur debut() const;
+
     Iterateur recherche(double) const;
+
     Iterateur egalOuPrecedent(double) const;
 
     //surcharge d'opérateurs
-    friend std::istream& operator>>(std::istream&, ArbreMap&);
-    std::tuple<double, double, double> operator[] (const Iterateur& ) const;
+    friend std::istream &operator>>(std::istream &, ArbreMap &);
+
+    std::tuple<double, double, double> operator[](const Iterateur &) const;
 
     /**
      * Représentation d'un Noeud
@@ -54,6 +66,7 @@ public:
     public:
 
         Noeud(double, double);
+
         double cle;
         double valeur;
         double a;
@@ -62,17 +75,23 @@ public:
 
     };
 
-    Noeud* racine;
+    Noeud *racine;
 
     //méthodes avec Noeud
 
-    bool inserer(double, double, Noeud*& noeud);
-    void rotationGaucheDroite(Noeud*&);
-    void rotationDroiteGauche(Noeud*&);
-    void copier(const Noeud*, Noeud*&) const;
+    bool inserer(double, double, Noeud *&noeud);
+
+    void rotationGaucheDroite(Noeud *&);
+
+    void rotationDroiteGauche(Noeud *&);
+
+    void copier(const Noeud *, Noeud *&) const;
+
     void vider();
-    void vider(Noeud*&);
-    void miseAjourMaxima(Noeud*&);
+
+    void vider(Noeud *&);
+
+    void miseAjourMaxima(Noeud *&);
 
     /**
      * Représentation d'un Itérateur
@@ -81,18 +100,20 @@ public:
 
     public:
 
-        Iterateur(const ArbreMap&);
-        Iterateur(const Iterateur&);
-        Iterateur(const Iterateur&, Noeud*);
+        Iterateur(const ArbreMap &);
+
+        Iterateur(const Iterateur &);
+
+        Iterateur(const Iterateur &, Noeud *);
 
         // surcharge d'opérateurs
-        Iterateur& operator ++ ();
+        Iterateur &operator++();
 
     private:
 
-        const ArbreMap& arbre_associe;
-        Pile<Noeud*> chemin;
-        Noeud* courant;
+        const ArbreMap &arbre_associe;
+        Pile<Noeud *> chemin;
+        Noeud *courant;
 
         friend class ArbreMap;
 

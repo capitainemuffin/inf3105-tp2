@@ -10,21 +10,22 @@
 #include <cctype>
 #include <algorithm>
 #include <iomanip>
-std::ostream &operator<<(std::ostream &os, std::vector<std::pair<double, double>> v) {
 
-	os << "[";
+std::ostream &operator<<(std::ostream &os, std::vector <std::pair<double, double>> v) {
 
-	auto it = v.begin();
+    os << "[";
 
-	while(it != v.end()){
+    auto it = v.begin();
 
-		os << "( " << it->first << ", " << it->second << " )" ;
-		++it;
-		if(it != v.end()) os << ", ";
+    while (it != v.end()) {
 
-	}
+        os << "( " << it->first << ", " << it->second << " )";
+        ++it;
+        if (it != v.end()) os << ", ";
 
-	os << "]";
+    }
+
+    os << "]";
 
     return os;
 }
@@ -39,120 +40,120 @@ int main() {
     ArbreMap arbre = ArbreMap();
     std::string commande;
     std::cout << std::fixed << std::setprecision(1);
-	while(std::getline(std::cin,commande)){
+    while (std::getline(std::cin, commande)) {
 
-		// Enlever tous les espaces 
-		commande.erase(
-			std::remove_if(commande.begin(), commande.end(), ::isspace), 
-			commande.end());
+        // Enlever tous les espaces
+        commande.erase(
+                std::remove_if(commande.begin(), commande.end(), ::isspace),
+                commande.end());
 
-		if (commande.front() == '(' && commande.back() == '.' && commande.at(commande.length()-2) == ')'){
+        if (commande.front() == '(' && commande.back() == '.' && commande.at(commande.length() - 2) == ')') {
 
-			/**
-     		* Choix 1 : insertion "(<double>, <double>)."
-     		*/			
+            /**
+             * Choix 1 : insertion "(<double>, <double>)."
+             */
 
-			double cle, valeur;
-			std::stringstream cle_str(commande.substr(1, commande.find(',') - 1));
-			std::stringstream valeur_str(commande.substr(commande.find(',') + 1, commande.length() - 2));
+            double cle, valeur;
+            std::stringstream cle_str(commande.substr(1, commande.find(',') - 1));
+            std::stringstream valeur_str(commande.substr(commande.find(',') + 1, commande.length() - 2));
 
-			cle_str >> cle;
-			valeur_str >> valeur;
+            cle_str >> cle;
+            valeur_str >> valeur;
 
-			if(cle_str.fail() || valeur_str.fail()) {
-				std::cerr << "Valeur invalide pour la commande 'Insertion'." << std::endl;
-				exit(-1);
-			}
+            if (cle_str.fail() || valeur_str.fail()) {
+                std::cerr << "Valeur invalide pour la commande 'Insertion'." << std::endl;
+                exit(-1);
+            }
 
-			arbre.inserer(cle, valeur);
+            arbre.inserer(cle, valeur);
 
-		} else if (commande.compare("max?") == 0) {
+        } else if (commande.compare("max?") == 0) {
 
-			/**
-     		* Choix 2 : maxima "max?"
-     		*/
+            /**
+             * Choix 2 : maxima "max?"
+             */
 
-    		std::cout << arbre.maxima() << std::endl;
+            std::cout << arbre.maxima() << std::endl;
 
-    	} else if (commande.back() == '?' && std::isdigit(commande.front())) {
+        } else if (commande.back() == '?' && std::isdigit(commande.front())) {
 
-			/**
-     		* Choix 3 : appartient "<double>?"
-     		*/
+            /**
+             * Choix 3 : appartient "<double>?"
+             */
 
-    		double valeur;
-    		std::stringstream valeur_str(commande.substr(0, commande.length() - 1));
+            double valeur;
+            std::stringstream valeur_str(commande.substr(0, commande.length() - 1));
 
-			if(valeur_str.fail()) {
-				std::cerr << "Valeur invalide pour la commande 'Appartient'." << std::endl;
-				exit(-2);
-			}
+            if (valeur_str.fail()) {
+                std::cerr << "Valeur invalide pour la commande 'Appartient'." << std::endl;
+                exit(-2);
+            }
 
-    		valeur_str >> valeur;
-     		std::cout << arbre.appartient(valeur) << std::endl;
+            valeur_str >> valeur;
+            std::cout << arbre.appartient(valeur) << std::endl;
 
 
-     	} else if (commande.back() == '?' && commande.substr(0, 5).compare("donne") == 0){
+        } else if (commande.back() == '?' && commande.substr(0, 5).compare("donne") == 0) {
 
-     		/**
-     		* Choix 4 : donne "donne<double>?"
-     		*/
+            /**
+            * Choix 4 : donne "donne<double>?"
+            */
 
-     		double valeur;
-     		std::stringstream valeur_str(commande.substr(5, commande.length() - 2));
-     		valeur_str >> valeur;
+            double valeur;
+            std::stringstream valeur_str(commande.substr(5, commande.length() - 2));
+            valeur_str >> valeur;
 
-			if(valeur_str.fail()) {
-				std::cerr << "Valeur invalide pour la commande 'Donne'." << std::endl;
-				exit(-3);
-			}
+            if (valeur_str.fail()) {
+                std::cerr << "Valeur invalide pour la commande 'Donne'." << std::endl;
+                exit(-3);
+            }
 
-			double resultat = arbre.maxima(valeur);
+            double resultat = arbre.maxima(valeur);
 
-			if (resultat == std::numeric_limits<double>::lowest()) {
+            if (resultat == std::numeric_limits<double>::lowest()) {
 
-				std::cout << "-inf" << std::endl;
+                std::cout << "-inf" << std::endl;
 
-			} else {
+            } else {
 
-				std::cout << resultat << std::endl;
+                std::cout << resultat << std::endl;
 
-			}
+            }
 
-    	} else if (commande.back() == '?' && commande.substr(0, 5).compare("avant") == 0) {
+        } else if (commande.back() == '?' && commande.substr(0, 5).compare("avant") == 0) {
 
-    		/**
-     		* Choix 5 : avant "<double>?"
-     		*/
+            /**
+             * Choix 5 : avant "<double>?"
+             */
 
-    		double valeur;
-     		std::stringstream valeur_str(commande.substr(5, commande.length() - 2));
-     		valeur_str >> valeur;
+            double valeur;
+            std::stringstream valeur_str(commande.substr(5, commande.length() - 2));
+            valeur_str >> valeur;
 
-     		if(valeur_str.fail()) {
-				std::cerr << "Valeur invalide pour la commande 'Avant'." << std::endl;
-				exit(-4);
-			}
+            if (valeur_str.fail()) {
+                std::cerr << "Valeur invalide pour la commande 'Avant'." << std::endl;
+                exit(-4);
+            }
 
-			std::cout << arbre.jusqua(valeur) << std::endl;
+            std::cout << arbre.jusqua(valeur) << std::endl;
 
-		} else if (commande.compare("q.") == 0){
+        } else if (commande.compare("q.") == 0) {
 
-			/**
-			* Choix 6 : quitter 
-			*/
+            /**
+            * Choix 6 : quitter
+            */
 
-			arbre.vider();
-			exit(0);
+            arbre.vider();
+            exit(0);
 
-		} else {
+        } else {
 
-			std::cerr << "Commande non reconnue." << std::endl;
-			exit(-5);
+            std::cerr << "Commande non reconnue." << std::endl;
+            exit(-5);
 
-		}
+        }
 
-	}
+    }
 
     return 0;
 }

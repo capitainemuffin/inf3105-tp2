@@ -18,14 +18,20 @@ class Pile {
 public:
 
     Pile();
+
     Pile(const Pile &);
+
     ~Pile();
 
     void empiler(const T &);
+
     void depiler(T &out);  // Depiler et copier le sommet dans out.
     T depiler();
+
     bool vide() const { return sommet == NULL; }
+
     void vider();
+
     const Pile<T> &operator=(const Pile<T> &);
 
 private:
