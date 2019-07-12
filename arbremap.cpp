@@ -93,9 +93,8 @@ double ArbreMap::aGauche(double cle) const{
 void ArbreMap::inserer(double cle, double valeur) {
 
     if(cle > valeur ){
-        double tmp = cle;
-        cle = valeur;
-        valeur = tmp;
+        std::cerr << "La clé ne peut être plus grande que la valeur." << std::endl;
+        exit(-6);
     }
 
     inserer(cle, valeur, this->racine);

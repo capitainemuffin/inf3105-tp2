@@ -9,13 +9,19 @@
 #include <sstream>
 #include <cctype>
 #include <algorithm>
-
+#include <iomanip>
 std::ostream &operator<<(std::ostream &os, std::vector<std::pair<double, double>> v) {
 
 	os << "[";
 
-	for(auto& pair : v){
-		os << "(" << pair.first << ", " << pair.second << "), " ;
+	auto it = v.begin();
+
+	while(it != v.end()){
+
+		os << "( " << it->first << ", " << it->second << " )" ;
+		++it;
+		if(it != v.end()) os << ", ";
+
 	}
 
 	os << "]";
@@ -32,7 +38,7 @@ int main() {
 
     ArbreMap arbre = ArbreMap();
     std::string commande;
-
+    std::cout << std::fixed << std::setprecision(1);
 	while(std::getline(std::cin,commande)){
 
 		// Enlever tous les espaces 
@@ -101,7 +107,17 @@ int main() {
 				exit(-3);
 			}
 
-    		std::cout << arbre.maxima(valeur) << std::endl;
+			double resultat = arbre.maxima(valeur);
+
+			if (resultat == std::numeric_limits<double>::lowest()) {
+
+				std::cout << "-inf" << std::endl;
+
+			} else {
+
+				std::cout << resultat << std::endl;
+
+			}
 
     	} else if (commande.back() == '?' && commande.substr(0, 5).compare("avant") == 0) {
 
