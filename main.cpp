@@ -11,7 +11,14 @@
 #include <algorithm>
 #include <iomanip>
 
-std::ostream &operator<<(std::ostream &os, std::vector <std::pair<double, double>> v) {
+/**
+ * Surcharge de l'opérateur << pour une liste de <std::pair<double,double>>.
+
+ * @param os l'instance de <std::ostream>
+ * @param v la liste de pairs
+ * @return l'instance de <std::ostream>
+ */
+std::ostream &operator<<(std::ostream &os, std::vector<std::pair<double, double>> v) {
 
     os << "[";
 
@@ -42,11 +49,12 @@ int main() {
     std::cout << std::fixed << std::setprecision(1);
     while (std::getline(std::cin, commande)) {
 
-        // Enlever tous les espaces
+        // Enlever tous les espaces dans la commande entrée
         commande.erase(
                 std::remove_if(commande.begin(), commande.end(), ::isspace),
                 commande.end());
 
+        // Traitement de la commande entrée
         if (commande.front() == '(' && commande.back() == '.' && commande.at(commande.length() - 2) == ')') {
 
             /**
@@ -67,7 +75,7 @@ int main() {
 
             arbre.inserer(cle, valeur);
 
-        } else if (commande.compare("max?") == 0) {
+        } else if (commande == "max?") {
 
             /**
              * Choix 2 : maxima "max?"
@@ -93,7 +101,7 @@ int main() {
             std::cout << arbre.appartient(valeur) << std::endl;
 
 
-        } else if (commande.back() == '?' && commande.substr(0, 5).compare("donne") == 0) {
+        } else if (commande.back() == '?' && commande.substr(0, 5) == "donne") {
 
             /**
             * Choix 4 : donne "donne<double>?"
@@ -120,7 +128,7 @@ int main() {
 
             }
 
-        } else if (commande.back() == '?' && commande.substr(0, 5).compare("avant") == 0) {
+        } else if (commande.back() == '?' && commande.substr(0, 5) == "avant") {
 
             /**
              * Choix 5 : avant "<double>?"
@@ -137,7 +145,7 @@ int main() {
 
             std::cout << arbre.jusqua(valeur) << std::endl;
 
-        } else if (commande.compare("q.") == 0) {
+        } else if (commande == "q.") {
 
             /**
             * Choix 6 : quitter

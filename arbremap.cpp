@@ -1,5 +1,5 @@
 /**
- * Implémentation de ArbreMap, Noeud et Iterateur
+ * Implémentation de <ArbreMap>, <ArbreMap::Noeud> et <ArbreMap::Iterateur>
  *
  * AUTEUR(S):
  *  1) Sofiane Selaoui SELS28049204
@@ -8,13 +8,13 @@
 #include "arbremap.h"
 
 /**
- * Constructeur d'un ArbreMap vide
+ * Constructeur d'un <ArbreMap> vide
  */
 ArbreMap::ArbreMap() :
         racine(NULL) {}
 
 /**
- * Destructeur d'un ArbreMap
+ * Destructeur d'un <ArbreMap>
  */
 ArbreMap::~ArbreMap() {
     vider(this->racine);
@@ -73,7 +73,7 @@ double ArbreMap::aGauche(double cle) const {
 
     double maxima = std::numeric_limits<double>::lowest();
 
-    std::vector <std::pair<double, double>> v = this->jusqua(cle);
+    std::vector<std::pair<double, double>> v = this->jusqua(cle);
 
     for (auto &noeud : v) {
 
@@ -85,10 +85,10 @@ double ArbreMap::aGauche(double cle) const {
 }
 
 /**
- * Choix 1 : insertion "(<double>, <double>)."
+ * Insère un <Noeud> dans <ArbreMap>
  *
- * @param cle
- * @param valeur
+ * @param cle début de l'intervale
+ * @param valeur fin de l'intervale
  */
 void ArbreMap::inserer(double cle, double valeur) {
 
@@ -99,9 +99,17 @@ void ArbreMap::inserer(double cle, double valeur) {
 
     inserer(cle, valeur, this->racine);
     miseAjourMaxima(this->racine);
-
 }
 
+/**
+ * Insère un <Noeud> dans <ArbreMap>
+ *
+ * @param cle début de l'intervale.
+ * @param valeur fin de l'intervale.
+ * @param noeud <Noeud> racine de <ArbreMap>
+ *
+ * @return True si la hauteur a augmentée, False sinon.
+ */
 bool ArbreMap::inserer(double cle, double valeur, Noeud *&noeud) {
 
     bool augmente = false;
@@ -163,15 +171,12 @@ bool ArbreMap::inserer(double cle, double valeur, Noeud *&noeud) {
     }
 
     return augmente;
-
 }
 
 /**
- * Choix 2 : maxima "max?"
- *
  * Retourne le maxima de la Racine
  *
- * @return a maximA de la Racine
+ * @return a Maxima de l'instance <ArbreMap>
  */
 double ArbreMap::maxima() const {
 
@@ -180,12 +185,24 @@ double ArbreMap::maxima() const {
 
 }
 
+/** *
+ * Retourne le maxima d'un Noeud.
+ *
+ * @param cle la clé du Noeud
+ *
+ * @return le maxima du Noeud
+ */
+double ArbreMap::maxima(double cle) const {
+
+    return aGauche(cle);
+}
+
 /**
- * Choix 3
+ * Test si une valeur est dans une des intervales de <ArbreMap>
  *
- * @param cle
+ * @param cle la valeur à tester
  *
- * @return le mot "vrai" ou "faux"
+ * @return <std::string> "vrai" si est dans une intervale, "faux" sinon.
  */
 std::string ArbreMap::appartient(double cle) const {
 
@@ -200,46 +217,35 @@ std::string ArbreMap::appartient(double cle) const {
     }
 
     return reponse;
-
 }
 
 /**
- * Choix 4 : donne "donne<double>?"
+ * Retourne une liste des intervales dont la clé est plus petite ou égale à la
+ * clé donnée en paramètre.
  *
- * Retourne le maxima pour un Noeud.
+ * @param cle la clé à tester
  *
- *
- * @param cle la clé du Noeud
- *
- * @return le maxima du Noeud
+ * @return std::vector <std::pair<double, double> > une liste des intervales
  */
-double ArbreMap::maxima(double cle) const {
-
-    return aGauche(cle);
-
-}
-
-/**
- * Choix 5 : avant "<double>?"
- *
- * @return
- */
-std::vector <std::pair<double, double>> ArbreMap::jusqua(double cle) const {
+std::vector<std::pair<double, double>> ArbreMap::jusqua(double cle) const {
 
     ArbreMap::Iterateur iter = debut();
-    std::vector <std::pair<double, double>> v;
+    std::vector<std::pair<double, double>> v;
+
     while (iter.courant && std::get<0>((*this)[iter]) <= cle) {
+
         v.push_back(std::make_pair(std::get<0>((*this)[iter]), std::get<1>((*this)[iter])));
-
         ++iter;
-
     }
 
     return v;
-
 }
 
-
+/**
+ * Fait la rotation de gauche à droite
+ *
+ * @param racine
+ */
 void ArbreMap::rotationGaucheDroite(Noeud *&racine) {
 
     Noeud *tmp = racine->gauche;
@@ -254,9 +260,13 @@ void ArbreMap::rotationGaucheDroite(Noeud *&racine) {
     racine->gauche = tmp->droite;
     tmp->droite = racine;
     racine = tmp;
-
 }
 
+/**
+ * Fait la rotation de droite à gauche
+ *
+ * @param racine
+ */
 void ArbreMap::rotationDroiteGauche(Noeud *&racine) {
 
     Noeud *tmp = racine->droite;
@@ -271,26 +281,21 @@ void ArbreMap::rotationDroiteGauche(Noeud *&racine) {
     racine->droite = tmp->gauche;
     tmp->gauche = racine;
     racine = tmp;
-
 }
 
-void ArbreMap::copier(const Noeud *source, Noeud *&noeud) const {
-
-    if (source != NULL) {
-        noeud = new Noeud(source->cle, source->valeur);
-        noeud->equilibre = source->equilibre;
-        copier(source->gauche, noeud->gauche);
-        copier(source->droite, noeud->droite);
-    }
-
-}
-
+/**
+ * Supprime l'arbre
+ */
 void ArbreMap::vider() {
 
     vider(this->racine);
-
 }
 
+/**
+ * Supprime le noeud et ses descendants.
+ *
+ * @param noeud racine du sous-arbre à supprimer
+ */
 void ArbreMap::vider(Noeud *&noeud) {
 
     if (noeud != NULL) {
@@ -300,13 +305,21 @@ void ArbreMap::vider(Noeud *&noeud) {
         noeud = NULL;
         delete noeud;
     }
-
-
 }
 
-/*
-* Méthodes en lien avec l'itérateur
-*/
+/**
+ * Constructeur Iterateur
+ *
+ * @param arbre un arbre binaire ArbreMap
+ */
+ArbreMap::Iterateur::Iterateur(const ArbreMap &arbre) :
+        arbre_associe(arbre),
+        courant(NULL) {}
+
+/**
+ * Renvoi un itérateur pointant sur le plus petit <Noeud> de l'arbre.
+ * @return iter <Iterateur>
+ */
 ArbreMap::Iterateur ArbreMap::debut() const {
 
     Iterateur iter(*this);
@@ -324,58 +337,27 @@ ArbreMap::Iterateur ArbreMap::debut() const {
 
     }
 
-
     iter.courant = tmp;
 
     return iter;
 }
 
-ArbreMap::Iterateur ArbreMap::recherche(double e) const {
-    Iterateur iter(*this);
-
-    Noeud *tmp = this->racine;
-
-    while (tmp) {
-
-        if (e < tmp->cle) {
-
-            iter.chemin.empiler(tmp);
-            tmp = tmp->gauche;
-
-        } else if (e > tmp->cle) {
-
-            tmp = tmp->droite;
-
-        } else {
-
-            iter.courant = tmp;
-            break;
-        }
-    }
-
-    if (iter.courant == NULL) iter.chemin.vider();
-
-    return iter;
-}
-
+/**
+ * Surcharge de []. Accède à un élément de <ArbreMap> avec un <Iterateur>.
+ * @param iter <Iterateur>
+ * @return un <std::tuple> contenant la clé, la valeur et le maxima du Noeud.
+ */
 std::tuple<double, double, double> ArbreMap::operator[](const ArbreMap::Iterateur &iter) const {
 
     assert(this->racine && iter.courant);
     return std::make_tuple(iter.courant->cle, iter.courant->valeur, iter.courant->a);
 }
 
-
-/*
-* Constructeur et méthodes pour l'Itérateur 
-*/
-
-ArbreMap::Iterateur::Iterateur(const ArbreMap &arbre) :
-        arbre_associe(arbre),
-        courant(NULL) {}
-
 /**
-* Pré-increment
-*/
+ * Surcharge de ++(). Pré-increment de <Iterateur>.
+ *
+ * @return l'itérateur
+ */
 ArbreMap::Iterateur &ArbreMap::Iterateur::operator++() {
 
     assert(courant);
@@ -406,5 +388,4 @@ ArbreMap::Iterateur &ArbreMap::Iterateur::operator++() {
     }
 
     return *this;
-
 }

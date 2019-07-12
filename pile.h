@@ -5,13 +5,11 @@
  *  1) SELS28049204
  */
 
-
 #if !defined(__PILE__H__)
 #define __PILE__H__
 
 #include <cstdlib>
 #include <assert.h>
-#include "pile.h"
 
 template<class T>
 class Pile {
@@ -19,13 +17,10 @@ public:
 
     Pile();
 
-    Pile(const Pile &);
-
     ~Pile();
 
     void empiler(const T &);
 
-    void depiler(T &out);  // Depiler et copier le sommet dans out.
     T depiler();
 
     bool vide() const { return sommet == NULL; }
@@ -35,7 +30,6 @@ public:
     const Pile<T> &operator=(const Pile<T> &);
 
 private:
-    //Pile(const Pile&); // on pourrait préférer mettre le constructeur par copie privé.
 
     class Cellule {
     public:
@@ -57,14 +51,6 @@ template<class T>
 Pile<T>::~Pile() {
     vider();
 }
-
-template<class T>
-Pile<T>::Pile(const Pile<T> &autre) {
-    sommet = NULL;
-    // version paresseuse : il suffit d'appeler l'opéreateur =
-    *this = autre;
-}
-
 
 template<class T>
 void Pile<T>::vider() {
@@ -92,16 +78,6 @@ T Pile<T>::depiler() {
     sommet = c.suivante;
     return c.contenu;
 }
-
-template<class T>
-void Pile<T>::depiler(T &e) {
-    assert(sommet != NULL);
-    e = sommet->contenu;
-    Cellule *c = sommet;
-    sommet = sommet->suivante;
-    delete c;
-}
-
 
 template<class T>
 const Pile<T> &Pile<T>::operator=(const Pile<T> &autre) {

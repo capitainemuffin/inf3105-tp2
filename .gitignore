@@ -2,3 +2,4 @@ tp2
 *.o
 tests/*
 .idea/*
+cmake-build-debug/*
