@@ -313,7 +313,7 @@ void ArbreMap::vider(Noeud *&noeud) {
  * @param arbre un arbre binaire ArbreMap
  */
 ArbreMap::Iterateur::Iterateur(const ArbreMap &arbre) :
-        courant(NULL) {};
+        courant(NULL) {}
 
 ArbreMap::Iterateur::~Iterateur(){
 
